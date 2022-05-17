@@ -1,0 +1,206 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Naturéa Produit {% endblock title%}
+{% block body %}
+
+{{ include("partials/title.html.twig", {'name':'Détails du produit'}) }}
+  <div class="section">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-6 col-md-6 mb-4 mb-md-0">
+              <div class="product-image">
+                    <div class="product_img_box">
+                        <img id="product_img" src='/assets/uploads/products/{{product.image}}' data-zoom-image="/assets/uploads/products/{{product.image}}" alt="{{ product.nameProduct }}" />
+                        <a href="#" class="product_img_zoom" title="Zoom">
+                            <span class="linearicons-zoom-in"></span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="pr_detail">
+                    <div class="product_description">
+                        <h4 class="product_title"><a href="#">{{ product.nameProduct }}</a></h4>
+                        <div class="product_price">
+                            <span class="price">${{ product.price/100}}</span>
+                            <del>${{ product.price*1.10/100}}</del>
+                            <div class="on_sale">
+                                <span>10% Off</span>
+                            </div>
+                        </div>
+                        <div class="rating_wrap">
+                                <div class="rating">
+                                    <div class="product_rate" style="width:80%"></div>
+                                </div>
+                                <span class="rating_num">(21)</span>
+                            </div>
+                        <div class="pr_desc">
+                            <p>{{product.description | raw}}</p>
+                        </div>
+                        <div class="product_sort_info">
+                            <ul>
+                                <li><i class="linearicons-shield-check"></i> 1 an de garanti de reprise si les conditions de plantation ont été respectées.</li>
+                                <li><i class="linearicons-sync"></i> 30 jours pour retourner votre produit</li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="cart_extra">
+                        <div class="cart-product-quantity">
+                            <div class="quantity">
+                                <!--<input type="button" value="-" class="minus">-->
+                                <input type="text" name="quantity" value="1" title="Qty">
+                               <!-- <input type="button" value="+" class="plus">-->
+                            </div>
+                        </div>
+                        <div class="cart_btn">
+                            <a href="{{ path('cartAdd', {'id':product.id}) }}" class="btn btn-fill-out btn-addtocart" type="button"><i class="icon-basket-loaded"></i> Ajouter au panier</a>
+                        </div>
+                    </div>
+                    <hr />
+                    <ul class="product-meta">
+                        <li>Categorie: <a href="#">
+                            {% for categorie in product.category %}
+                                {{ categorie.nameCategorie}},
+                            {% endfor %}
+                        </a></li>
+                        <li>Tags: {{product.tags }}</li>
+                    </ul>
+                    
+                    <div class="product_share">
+                        <span>Share:</span>
+                        <ul class="social_icons">
+                            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
+                            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
+                            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
+                            <li><a href="#"><i class="ion-social-youtube-outline"></i></a></li>
+                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="col-12">
+            	<div class="large_divider clearfix"></div>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="col-12">
+            	<div class="tab-style3">
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" id="Description-tab" data-toggle="tab" href="#Description" role="tab" aria-controls="Description" aria-selected="true">Description</a>
+                      	</li>
+                      	<li class="nav-item">
+                        	<a class="nav-link" id="Additional-info-tab" data-toggle="tab" href="#Additional-info" role="tab" aria-controls="Additional-info" aria-selected="false">Complément d'infos</a>
+                      	</li>
+                      
+                    </ul>
+                	<div class="tab-content shop_info_tab">
+                      	<div class="tab-pane fade show active" id="Description" role="tabpanel" aria-labelledby="Description-tab">
+                        	<p>{{ product.description | raw }}</p>
+                      	</div>
+                      	<div class="tab-pane fade" id="Additional-info" role="tabpanel" aria-labelledby="Additional-info-tab">
+                        	<p>{{ product.moreInformations | raw }}</p>
+                      	</div>
+                      	<!--<div class="tab-pane fade" id="Reviews" role="tabpanel" aria-labelledby="Reviews-tab">
+                        	<div class="comments">
+                            	<h5 class="product_tab_title">2 Review For <span>Blue Dress For Woman</span></h5>
+                                <ul class="list_none comment_list mt-4">
+                                    <li>
+                                        <div class="comment_img">
+                                            <img src="http://placehold.it/50" alt="user1"/>
+                                        </div>
+                                        <div class="comment_block">
+                                            <div class="rating_wrap">
+                                                <div class="rating">
+                                                    <div class="product_rate" style="width:80%"></div>
+                                                </div>
+                                            </div>
+                                            <p class="customer_meta">
+                                                <span class="review_author">Alea Brooks</span>
+                                                <span class="comment-date">March 5, 2018</span>
+                                            </p>
+                                            <div class="description">
+                                                <p>Lorem Ipsumin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="comment_img">
+                                            <img src="http://placehold.it/300" alt="user2"/>
+                                        </div>
+                                        <div class="comment_block">
+                                            <div class="rating_wrap">
+                                                <div class="rating">
+                                                    <div class="product_rate" style="width:60%"></div>
+                                                </div>
+                                            </div>
+                                            <p class="customer_meta">
+                                                <span class="review_author">Grace Wong</span>
+                                                <span class="comment-date">June 17, 2018</span>
+                                            </p>
+                                            <div class="description">
+                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                        	</div>-->
+                            <!--<div class="review_form field_form">
+                                <h5>Add a review</h5>
+                                <form class="row mt-3">
+                                    <div class="form-group col-12">
+                                        <div class="star_rating">
+                                            <span data-value="1"><i class="far fa-star"></i></span>
+                                            <span data-value="2"><i class="far fa-star"></i></span>
+                                            <span data-value="3"><i class="far fa-star"></i></span>
+                                            <span data-value="4"><i class="far fa-star"></i></span>
+                                            <span data-value="5"><i class="far fa-star"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <textarea required="required" placeholder="Your review *" class="form-control" name="message" rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <input required="required" placeholder="Enter Name *" class="form-control" name="name" type="text">
+                                     </div>
+                                    <div class="form-group col-md-6">
+                                        <input required="required" placeholder="Enter Email *" class="form-control" name="email" type="email">
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Submit Review</button>
+                                    </div>
+                                </form>
+                            </div>
+                      	</div>-->
+                	</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+        	<div class="col-12">
+            	<div class="heading_s1">
+                	<h3>Produits similaires</h3>
+                </div>
+            	<div class="releted_product_slider carousel_slider owl-carousel owl-theme" data-margin="20" data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "1199":{"items": "4"}}'>
+                   {% for categorie in product.category %}
+                       {% for productIdem in  categorie.products %}
+                           {% if product is not same as(productIdem) %}<!--Si produits différents de celui sélectionné-->
+                              {{ include('partials/product_item.html.twig', {'product': productIdem}) }}
+                            {% endif %}
+                       {% endfor %}
+                   
+                    {% endfor %} 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

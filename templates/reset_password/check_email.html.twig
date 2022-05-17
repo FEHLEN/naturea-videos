@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialisation du mot de passe par mail{% endblock %}
+
+{% block body %}
+{{ include("partials/title.html.twig", {'name': 'Réinitialisation du mot de passe par mail'})}}
+   <div class="login_register_wrap section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-md-10">
+                <div class="login_wrap">
+                    <div class="padding_eight_all bg-white">
+                        <div class="heading_s1">
+                            <h3>Nous envoyons un email</h3>
+                        </div>
+                        <div class="content">
+                            <p>Un mail vous a été envoyé qui contient un lien que vous devez cliquer pour réinitialiser votre mot de passe. Ce lien expirera dans 2 heure(s).</p>
+                            <p>Si vous n'avez pas reçu un mail de NeliExprass (merci de regarder dans vos spams) alors cliquer sur ce lien <a href="{{ path('app_forgot_password_request') }}">Recommencer</a>.</p>
+                        </div>
+                        <div class="form-note text-center">Vous n'avez pas de compte ? <a href="{{ path('app_register')}}">Inscription</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

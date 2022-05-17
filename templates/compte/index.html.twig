@@ -1,0 +1,182 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre compte utilisateur{% endblock %}
+
+{% block body %}
+  {{ include('partials/title.html.twig', {'name':'Votre compte'})}}
+  <div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+                <div class="dashboard_menu">
+                    <ul class="nav nav-tabs flex-column" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="ti-layout-grid2"></i>Tableau Bord</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="ti-shopping-cart-full"></i>Commandes</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="true"><i class="ti-location-pin"></i>Mon Adresse</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="account-detail-tab" data-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="ti-id-badge"></i>Détails</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout')}}"><i class="ti-lock"></i>Déconnexion</a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                {% for message in app.flashes('address_message') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert"> {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                <div class="tab-content dashboard_content">
+                      <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Bonjour {{ app.user.firstname | upper }}  {{ app.user.lastname | upper}}</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Avec votre tableau de bord. vous pouvez facilement choisir &amp; visualiser votre <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">récentes commandes</a>, gérer vos <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">adresses de facturation et livraison</a> and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">changer votre mot de passe, afficher les détails de votre compte.</a></p>                      
+                                
+
+
+                            </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Commandes</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Commande</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Total</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                                <tr>
+                                                    <td>1235</td>
+                                                    <td>23/01/22</td>
+                                                    <td>Payée</td>
+                                                    <td>125 euros pour 2 article(s)</td>
+                                                    <td><a href="" class="btn btn-fill-out btn-sm">Voir</a></td> 
+                                                </tr>
+                                            
+                                          
+                                                <div class="messageOrders">{{ app.user.firstname}} {{ app.user.lastname }}. Vous n'avez pas encore fait de commande !</div>
+                                           
+                                           
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>  
+                        </div>
+                      </div>
+                    <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="{{ path('address_new')}}" class="btn btn-fill-out mb-3">Ajoutez une nouvelle adresse</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                           {% if app.user.addresses %}
+                              {% set index = 0 %}
+                               {% for address in app.user.addresses %}
+                                 {% set index = index +1 %}
+                                    <div class="col-lg-6">
+                                        <div class="card mb-3 mb-lg-0">
+                                            <div class="card-header">
+                                                <h3> Votre Adresse n° {{ index }}</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <address> {{ address.fullName | upper }} <br>
+                                                    Entreprise : {{ address.societe }} <br>
+                                                    {{ address.adresse}} <br>
+                                                    {{ address.complementAdresse }} <br>
+                                                    {{ address.ville}} <br>
+                                                    {{ address.codePostal}} <br>
+                                                    Tel : {{ address.telephone }} <br>
+                                                    {{ address.pays}}
+
+                                                </address>
+                                                <div class="btn-group">
+                                                    <a href="{{ path('address_edit', {'id':address.id})}}" class="btn btn-success">Editer</a>
+                                                    {{ include('address/_delete_form.html.twig') }}                  
+                                                </div>
+                                            
+                                            </div>     
+                                        </div>
+                                    </div>
+                                 {% endfor %}
+                            {% else %}
+                        
+                               <p>Nous n'avons pas trouvé d'adresse vous concernant, merci d'en créer une !</p>
+                            {% endif %}
+                                
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Compte Détails</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Partant pour faire des changements sur votre compte !</p>
+                                <form method="post" name="enq">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>Prénom <span class="required">*</span></label>
+                                            <input required="" value="{{ app.user.firstname }}" class="form-control" name="name" type="text">
+                                         </div>
+                                         <div class="form-group col-md-6">
+                                            <label>Nom <span class="required">*</span></label>
+                                            <input required="" value="{{ app.user.lastname }}" class="form-control" name="phone">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Adresse mail <span class="required">*</span></label>
+                                            <input required="" value="{{ app.user.email }}" class="form-control" name="email" type="email">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Actuel mot de passe <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="password" type="password">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Nouveau mot de passe <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="npassword" type="password">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Confirmer mot de passe <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="cpassword" type="password">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

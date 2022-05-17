@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Naturéa vous accueille !{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    {% if accueilSlider %}
+        {{ include("partials/accueil_slider.html.twig", { 'slider': accueilSlider}) }}
+    {% else %}
+       {{ include("partials/title.html.twig", {'name':'Bienvenue'}) }}
+        <h1>Avec Naturéa vous faites des affaires renversantes !</h1>
+    {% endif %}
+    </div>
+    <div class="container">
+
+        <div class="section small_pt pb_70">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="heading_s1 text-center">
+                            <h2>Nos produits exclusifs</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="tab-style1">
+                            <ul class="nav nav-tabs justify-content-center" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="arrival-tab" data-toggle="tab" href="#arrival" role="tab" aria-controls="arrival" aria-selected="true">Nouveauté</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="sellers-tab" data-toggle="tab" href="#sellers" role="tab" aria-controls="sellers" aria-selected="false">Best Sellers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="featured-tab" data-toggle="tab" href="#featured" role="tab" aria-controls="featured" aria-selected="false">Moderne</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="specialoffer-tab" data-toggle="tab" href="#specialoffer" role="tab" aria-controls="specialoffer" aria-selected="false">Offres Spéciales</a>
+                                </li>
+        
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="arrival" role="tabpanel" aria-labelledby="arrival-tab">
+                                <div class="row shop_container">
+                                    {% for product in productNew %}
+                                        {{ include('partials/product.html.twig',{'product': product}) }}
+                                    {% endfor %}
+        
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="sellers" role="tabpanel" aria-labelledby="sellers-tab">
+                                <div class="row shop_container">
+                                   {% for product in productBest %}
+                                        {{ include('partials/product.html.twig',{'product': product}) }}
+                                    {% endfor %}
+        
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab">
+                                <div class="row shop_container">
+                                    {% for product in productFeatured %}
+                                        {{ include('partials/product.html.twig',{'product': product}) }}
+                                    {% endfor %}
+        
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="specialoffer" role="tabpanel" aria-labelledby="specialoffer-tab">
+                                <div class="row shop_container">
+                                    {% for product in productSpecialOffer %}
+                                        {{ include('partials/product.html.twig',{'product': product}) }}
+                                    {% endfor %}
+        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+{% endblock %}

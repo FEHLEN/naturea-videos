@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+{% block title %}Confirmation commande Naturéa{% endblock %}
+
+{% block scriptStripe %}
+   
+    <script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block body %}
+    {{ include("partials/title.html.twig", {'name':'Confirmation de votre commande'}) }}
+
+   <div class="section checkout">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="heading_s1">
+                            <h4>Votre adresse de livraison</h4>
+                            <div class="content" id="address"> <!-- raw permet l'interprétation de l'html -->
+                                 {{ address | replace({'[spr]' : '<br>'}) | raw}}
+                                 <a href="{{path('address_edit', {'id':address.id})}}" class="btn btn-fill-out  mt-1">Modifier l'adresse</a>
+                                 <a href="{{path('checkoutShow')}}" class="btn btn-fill-out  mt-1">Changer choix d'adresse</a>
+                            </div>
+                            
+                            
+                    </div>
+                    <div class="heading_s1">
+                        <h4>Entreprise de livraison</h4>
+                        <div class="content" id="transporteurs">
+                            {{ transporteurs  | replace({'[spr]' : '<br>'}) | raw }}
+                            <a href="{{path('checkoutShow')}}" class="btn btn-fill-out  mt-1">Changer choix transporteur</a>
+                        </div>
+                         
+                    </div>
+                      
+                </div>
+
+                <div class="col-md-6">
+                    <div class="order_review">
+                        <div class="heading_s1">
+                            <h4>Votre commande</h4>
+                        </div>
+                        <div class="table-responsive order_table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Produit</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 {% for element in cart.products %}
+                                   
+                                        <tr>
+                                            <td> {{ element.product.nameProduct }} <span class="product-qty">x {{ element.quantity }}</span></td>
+                                            <td> € {{ element.product.price/100 }}</td>
+                                        </tr>
+                                 {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>SousTotal HT</th>
+                                        <td class="product-subtotal"> € {{ cart.data.subTotalHT }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Taxe</th>
+                                        <td class="product-subtotal"> € {{ cart.data.Taxe }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Transport {{transporteurs.nameTransport }}</th>
+                                        <td class="product-subtotal"> € {{ transporteurs.price/100 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total</th>
+                                        <td class="product-subtotal"> € {{ cart.data.subTotalTTC + transporteurs.price/100  }}</td>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+                        </div>
+                        <div class="payment_method">
+                            <div class="heading_s1">
+                                <h4>Paiement</h4>
+                            </div>
+                            
+                        </div>
+                        <button type="submit" id="checkout-button" 
+                        class="btn btn-fill-out btn-block">Payer | {{ cart.data.subTotalTTC + transporteurs.price/100 }} euros</button>
+                        <p>Pour le numéro de carte bancaire en mode essai, mettre 4242 4242 4242 4242. Une date quelconque, année > année en cours, code de 3 chiffres au hasard.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">/*clé public  */
+       var stripe = Stripe('pk_test_51J077OJKhLQ2081pmLHSN66YCYdzpkewIXkoTPl413BxUIXOvUnzG7DlCAucicyncXW7pGSAyOJmCtgQI0snQdI800N6wMIMOJ');
+       var checkoutButton = document.getElementById("checkout-button");
+
+    checkoutButton.addEventListener("click", function () {
+      fetch("/create-checkout-session/{{ reference }}", {
+        method: "POST",
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function (result) {
+          // If redirectToCheckout fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using error.message.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        })
+        .catch(function (error) {
+          console.error("Error:", error);
+        });
+    });
+    </script>
+{% endblock %}

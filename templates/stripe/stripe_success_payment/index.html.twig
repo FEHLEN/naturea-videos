@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement réussi!{% endblock %}
+
+{% block body %}
+{{ include("partials/title.html.twig", {'name': 'Commande Payée '})}}
+    <div class="section checkout">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="text-center order_complete">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="heading_s1">
+                            <h3>Merci {{ orders.fullname }}. Votre paiement est un succès !</h3>
+                            <div class="">
+                                <div>Le paiement de votre commande numéro <strong> {{ orders.reference }}</strong>  a été acceptée.</div>
+                                    <div>Votre paiement est en status "en cours de vérification".
+                                        Les paiements sont usuellement fini d'être vérifier dans une heure.
+                                        Après verification, le vendeur commencera la préparation de votre commande.
+                                    </div>
+                                <div>
+                                <div>Merci pour votre commande ! Votre commande sera envoyée dans 3 à 6 heures par le transporteur {{ orders.transportName }}. Vous recevrez un email de confirmation quand votre commande sera envoyée.
+                                </div>
+                                <a href="{{path('accueil')}}" class="btn btn-fill-out">Continuer les achats</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

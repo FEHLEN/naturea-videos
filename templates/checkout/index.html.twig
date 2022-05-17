@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+{% block title %}Recapitulation commande Naturéa{% endblock %}
+
+{% block body %}
+    {{ include("partials/title.html.twig", {'name':'Récapitulation de votre commande'}) }}
+
+   <div class="section checkout">
+        <div class="container">
+         {{ form_start( checkout, {action: path('checkoutConfirm')} )}}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="heading_s1">
+                            <h4>Vos adresses de livraison</h4>
+                            <div class="content"> <!-- raw permet l'interprétation de l'html -->
+                                 {{ form_widget(checkout.address) | replace({'[spr]' : '<br>'}) | raw}}
+                            </div>
+                            <a href="{{ path('address_new') }}" class="btn btn-fill-out btn-block mt-1">Nouvelle adresse</a>
+                    </div>
+                    <div class="heading_s1">
+                        <h4>Entreprises de livraison</h4>
+                        <div class="content">
+                            {{ form_widget(checkout.transporteurs)  | replace({'[spr]' : '<br>'}) | raw }}
+                        </div>
+                    </div>
+                    <div class="heading_s1">
+                        <h4>Informations pour le livreur</h4>
+                        <div class="form-group mb-0">
+                          {{ form_widget(checkout.informations) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="order_review">
+                        <div class="heading_s1">
+                            <h4>Votre commande</h4>
+                        </div>
+                        <div class="table-responsive order_table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Produit</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 {% for element in cart.products %}
+                                   
+                                        <tr>
+                                            <td> {{ element.product.nameProduct }} <span class="product-qty">x {{ element.quantity }}</span></td>
+                                            <td> € {{ element.product.price/100 }}</td>
+                                        </tr>
+                                 {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>SousTotal HT</th>
+                                        <td class="product-subtotal"> € {{ cart.data.subTotalHT }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Taxe</th>
+                                        <td class="product-subtotal"> € {{ cart.data.Taxe }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total</th>
+                                        <td class="product-subtotal"> € {{ cart.data.subTotalTTC }}</td>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+                        </div>
+                        <div class="payment_method">
+                            <div class="heading_s1">
+                                <h4>Payment</h4>
+                            </div>
+                            
+                        </div>
+                        <button type="submit" id="checkout" class="btn btn-fill-out btn-block">Paiement</button>
+                    </div>
+                </div>
+            </div>
+           {{ form_end(checkout) }}
+        </div>
+    </div>
+
+
+{% endblock %}

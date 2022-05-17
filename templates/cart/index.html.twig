@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier Naturéa {% endblock %}
+
+{% block body %}
+{{ include("partials/title.html.twig", {'name':'Votre panier'}) }}
+   <div class="section">
+        <div class="container">
+              <div class="row">
+                  <div class="col-12">
+                      <div class="table-responsive shop_cart_table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">&nbsp;</th>
+                                    <th class="product-name">Produit</th>
+                                    <th class="product-price">Prix</th>
+                                    <th class="product-quantity">Quantité</th>
+                                    <th class="product-subtotal">Total</th>
+                                    <th class="product-remove">Supprimer</th>
+                                </tr>
+                            </thead> 
+                            <tbody>
+                              {% if app.session.get('cart') %}
+                                {% for element in cart.products %}
+                                    <tr>
+                                    
+                                        <td class="product-thumbnail"><a href="#"><img src="/assets/uploads/products/{{element.product.image}}" alt="{{element.product.nameProduct}}"></a></td>
+                                        <td class="product-name" data-title="Product"><a href="#">{{element.product.nameProduct}}</a></td>
+                                        <td class="product-price" data-title="Price">{{element.product.price/100}}</td>
+                                        <td class="product-quantity" data-title="Quantity"><div class="quantity">
+                                        <a href="{{ path('cartDelete', {'id':element.product.id})}}" type="button" value="-" class="minus"> - </a>
+                                        <input type="text" name="quantity" value="{{element.quantity}}" title="Qty" class="qty" size="4">
+                                        <a href="{{ path('cartAdd', {'id':element.product.id})}}" type="button" value="+" class="plus"> + </a>
+                                        </div></td>
+                                        <td class="product-subtotal" data-title="Total">€ {{ element.quantity * element.product.price/100 }}</td>
+                                        <td class="product-remove" data-title="Remove"><a href="{{ path('cartDeleteAll', {'id':element.product.id})}}"><i class="ti-close"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                               {% else %}
+                                    <p>Votre panier est vide !</p>
+                                   
+                                {% endif %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="product-thumbnail">&nbsp;</th>
+                                    <th class="product-name">Produit</th>
+                                    <th class="product-price">Prix</th>
+                                    <th class="product-quantity">Quantité</th>
+                                    <th class="product-subtotal">Total</th>
+                                    <th class="product-remove">Supprimer</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                         <p><a class="btn btn-fill-out" href="{{ path('accueil')}}">Poursuivre vos achats</a></p>
+                      </div>
+                  </div>
+              </div>   
+              <div class="row">
+                  <div class="col-12">
+                    <div class="medium_divider"></div>
+                    <div class="divider center_icon"><i class="ti-shopping-cart-full"></i></div>
+                    <div class="medium_divider"></div>
+                  </div>
+              </div>             
+              <div class="row">
+                  <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
+                    <div class="border p-3 p-md-4">
+                        <div class="heading_s1 mb-3">
+                            <h6>Panier Totaux</h6>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="cart_total_label">Panier Soustotal HT</td>
+                                        <td class="cart_total_amount">€ {{ cart.data.subTotalHT}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">Taxe (20%) </td>
+                                        <td class="cart_total_amount">€ {{ cart.data.Taxe }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">Total TTC à payer</td>
+                                        <td class="cart_total_amount"><strong>€ {{ cart.data.subTotalTTC  }}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="{{ path('checkout')}}" class="btn btn-fill-out">Valider votre commande</a>
+                    </div>
+                  </div>
+              </div>
+         </div>
+      </div>
+
+{% endblock %}

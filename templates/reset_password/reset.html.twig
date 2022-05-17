@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Enregistrer votre nouveau mot de passe{% endblock %}
+
+{% block body %}
+    {{ include("partials/title.html.twig", {'name':'Enregistrez votre nouveau mot de passe'}) }}
+    <div class="login_register_wrap section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-md-10">
+                    <div class="login_wrap">
+                        <div class="padding_eight_all bg-white">
+                            <div class="heading_s1">
+                                <h3>Un nouveau mot de passe</h3>
+                            </div>
+                            <div class="content">
+                                {{ form_start(resetForm) }}
+                                    {{ form_row(resetForm.plainPassword) }}
+                                    <button class="btn btn-fill-out btn-block">Enregistrer</button>
+                                {{ form_end(resetForm) }}
+                            </div>
+                            <div class="form-note text-center">Vous n'avez pas de compte ? <a href="{{ path('app_register')}}">Inscription</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

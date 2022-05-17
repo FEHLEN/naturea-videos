@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Afficher l'adresse{% endblock %}
+
+{% block body %}
+   {{ include("partials/title.html.twig", {'name':'Gérez votre adresse'}) }}
+    <div class="login_register_wrap section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-md-10">
+                    <div class="login_wrap">
+                        <div class="padding_eight_all bg-white">
+                            <div class="heading_s1">
+                                <h3>Changement d'adresse</h3>
+                            </div>
+                            <div class="content">
+                                {{ include('address/_form.html.twig', {'button_label': 'Modifier'}) }}
+                                <a class="btn btn-border-fill btn-block mt-2" href="{{ path('app_compte') }}">Retour page compte</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+{% endblock %}

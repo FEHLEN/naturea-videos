@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    {{ include("partials/title.html.twig", {'name':'Inscrivez-vous !'}) }}
+    <div class="login_register_wrap section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-md-10">
+                <div class="login_wrap">
+            		<div class="padding_eight_all bg-white">
+                        <div class="heading_s1">
+                            <h3>Créer votre compte</h3>
+                        </div>   
+                        <div class="message-flash">
+                            {% for flashError in app.flashes('verify_email_error') %}
+                                <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                            {% endfor %}
+                        </div>
+                        {{ form_start(registrationForm) }}
+                            <div class="form-group">
+                            <p>Nom usuel</p>
+                                {{ form_row(registrationForm.username) }}
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6"><p>Prénom</p>{{ form_row(registrationForm.firstname) }}</div>
+                                <div class="col-md-6"><p>Nom</p>{{ form_row(registrationForm.lastname) }}</div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(registrationForm.email) }}
+                            </div>
+                             <div class="form-group">
+                                {{ form_row(registrationForm.plainPassword) }}
+                            </div>
+                            <div class="form-group">                  
+                                {{ form_row(registrationForm.agreeTerms) }} 
+                                <a href="{{ path('mentions_legales')}}" target="_blank">Mentions légales</a>                                            
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-fill-out btn-block" name="register">Valider</button>
+                            </div>
+                            <div class="form-note text-center">Vous avez déjà un compte ? <a href="{{ path('app_login')}}">Se connecter maintenant</a></div>
+                        {{ form_end(registrationForm) }}
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+ 
+{% endblock %}

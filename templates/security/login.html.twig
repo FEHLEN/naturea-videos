@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+{{ include('partials/title.html.twig', {'name':'Connectez-vous !'})}}
+<div class="login_register_wrap section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-md-10">
+                <div class="login_wrap">
+                    <div class="padding_eight_all bg-white">
+                        <div class="heading_s1">
+                            <h3>Connexion</h3>
+                        </div>
+                        <form method="post">
+                            {% if app.user %}
+                                <div class="mb-3">
+                                    Vous êtes {{ app.user.lastname }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+                                </div>
+                            {% endif %}
+                            <div class="message-flash">
+                                {% if error %}
+                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail">Email</label>
+                                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword">Password</label>
+                                <input type="password" name="password" id="inputPassword" class="form-control" required>
+
+                            </div>
+                                <input type="hidden" name="_csrf_token"
+                                    value="{{ csrf_token('authenticate') }}"
+                                >
+                            <div class="login_footer form-group">
+                                <div class="chek-form">
+                                    <div class="custome-checkbox">
+                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
+                                        <label class="form-check-label" for="exampleCheckbox1"><span>Se souvenir</span></label>
+                                    </div>
+                                </div>
+                                <a href="{{ path('app_forgot_password_request')}}">Mot de passe oublié ?</a>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-fill-out btn-block" name="login">Se connecter</button>
+                            </div>
+                        </form>
+                        <div class="form-note text-center">Vous n'avez pas de compte ? <a href="{{ path('app_register')}}">S'inscrire maintenant</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+{% endblock %}

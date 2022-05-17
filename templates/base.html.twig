@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Bienvenue chez Naturéa{% endblock %}</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="Naturea" name="author">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Exclusively for all! Take advantage of up to -50% on these offers during our smart days. Shop smart with discounts on electronics, phones and home goods. Up to -50% Buyer Protection. Free Shipping. Summer promo. Great Value. A multitude of sellers.">
+        <meta name="keywords" content="">
+        <link rel="shortcut icon" type="image/x-icon" href="assets/images/mini-logo.png">
+        <link rel="stylesheet" href="/assets/style.css">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}{% endblock %}
+        {% block scriptStripe %}{% endblock %}
+       
+    </head>
+    <body>
+        {% include "partials/header.html.twig" %}
+
+        {% block body %}{% endblock %}
+
+        {% include "partials/footer.html.twig" %}
+
+        <script src="/assets/js/jquery-1.12.4.min.js"></script> 
+        <script src="/assets/js/popper.min.js"></script>
+        <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/owlcarousel/js/owl.carousel.min.js"></script>
+        <script src="/assets/js/magnific-popup.min.js"></script>
+        <script src="/assets/js/waypoints.min.js"></script> 
+        <script src="/assets/js/parallax.js"></script> 
+        <script src="/assets/js/jquery.countdown.min.js"></script> 
+        <script src="/assets/js/imagesloaded.pkgd.min.js"></script>
+        <script src="/assets/js/isotope.min.js"></script>
+        <script src="/assets/js/jquery.dd.min.js"></script>
+        <script src="/assets/js/slick.min.js"></script>
+        <script src="/assets/js/jquery.elevatezoom.js"></script>
+        <script src="/assets/js/select2.min.js"></script>
+        <script src="/assets/js/scripts.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,118 @@
+<div class="preloader">
+    <div class="preloader-content">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+<header class="header_wrap fixed-top header_with_topbar">
+    <div class="top-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                        <div class="lng_dropdown mr-2">
+                            <p>Site Français <img class="logo" src="/assets/images/fr.png" alt="logo drapeau français"/></p>
+                        </div>
+                        <div class="mr-3">
+                           <p>Devises en EUROS</p>
+                        </div>
+                        <ul class="contact_detail text-center text-lg-left">
+                            <li><i class="ti-mobile"></i><span>06 38 70 09 81</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center text-md-right">
+                           <ul class="header_list">
+                            <li><a href=""><i class="ti-control-shuffle"></i><span>Comparer</span></a></li>
+                            <li><a href=""><i class="ti-heart"></i><span>Préférences</span></a></li>
+                            {% if app.user %}
+                                <li><a href="{{ path('app_logout')}}"><i class="fas fa-sign-out-alt"></i><span>Déconnecter</span></a></li>
+                                <li><a href="{{ path('app_compte')}}"><i class="fas fa-user-alt"></i><span>Compte</span></a></li>
+                            {% else %}    
+                                <li><a href="{{ path('app_login')}}"><i class="ti-user"></i><span>Connexion</span></a></li>
+                                <li><a href="{{ path('app_register')}}"><i class="fas fa-sign-in-alt"></i><span>Inscription</span></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom_header dark_skin main_menu_uppercase">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg"> 
+                <a class="navbar-brand" href="{{ path('accueil')}}">
+                Naturea
+                    <!--<img class="logo_light" src="/assets/images/logo_light.png" alt="logo" />-->
+                    <img class="logo" src="/assets/images/mini-logo.png" alt="logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-expanded="false"> 
+                    <span class="ion-android-menu"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="dropdown">
+                            <a  class="nav-link" href="{{ path('accueil')}}">Accueil</a>   
+                        </li>
+                        <li class="dropdown">
+                            <a class=" nav-link" href="#" data-toggle="dropdown">Pages</a>
+                        </li>
+                        <li class="">
+                            <a class=" nav-link" href="#" data-toggle="dropdown">Produits</a>
+                           
+                        </li>
+                        <li class="">
+                            <a class="nav-link" href="">SHOP</a>
+                            
+                        </li>
+                        <li><a class="nav-link nav_item" href="">Contactez-nous</a></li> 
+                    </ul>
+                </div>
+                <ul class="navbar-nav attr-nav align-items-center">
+                    <li><a href="javascript:void(0);" class="nav-link search_trigger"><i class="linearicons-magnifier"></i></a>
+                        <div class="search_wrap">
+                            <span class="close-search"><i class="ion-ios-close-empty"></i></span>
+                            <form>
+                                <input type="text" placeholder="Search" class="form-control" id="search_input">
+                                <button type="submit" class="search_icon"><i class="ion-ios-search-strong"></i></button>
+                            </form>
+                        </div><div class="search_overlay"></div>
+                    </li>
+                    <li class="dropdown cart_dropdown"><a class="nav-link cart_trigger" href="#" data-toggle="dropdown"><i class="linearicons-cart"></i><span class="cart_count">
+                        <!-- utiliser variable de session cartData dans laquelle il y a fullcart-->
+                         {% if app.session.get('cart') %}
+                            {{ app.session.get('cartData').data.quantity_cart }}
+                        {% else %}
+                            0
+                        {% endif %}
+                      </span></a>
+                        <div class="cart_box dropdown-menu dropdown-menu-right">
+                            <ul class="cart_list">
+                               {% if app.session.get('cartData') %}
+                                    {% for element in app.session.get('cartData').products %}
+                                        <li>
+                                            <a href="{{ path('cartDeleteAll', {'id':element.product.id})}}" class="item_remove"><i class="ion-close"></i></a>
+                                            <a href="#"><img src="/assets/uploads/products/{{ element.product.image}}" alt="{{ element.product.nameProduct}}">{{ element.product.nameProduct}}</a>
+                                            <span class="cart_quantity">{{ element.quantity }}<span class="cart_amount"> x <span class="price_symbole">€</span></span>{{ element.product.price/100 }}</span>   
+                                        </li>
+                                    {% endfor %}
+                                {% else %}
+                                    <li>Votre panier est vide !</li>
+                                 {% endif %}
+                            </ul>
+                            {% if app.session.get('cartData') %}
+                                <div class="cart_footer">
+                                    <p class="cart_total"><strong>Subtotal TTC:</strong> <span class="cart_price"> <span class="price_symbole">$</span></span>{{ app.session.get('cartData').data.subTotalTTC }}</p>
+                                    <p class="cart_buttons"><a href="{{ path('panier')}}" class="btn btn-fill-line rounded-0 view-cart">Voir panier</a><a href="{{ path('checkoutShow')}}" class="btn btn-fill-out rounded-0 checkout">Valider</a></p>
+                                </div>
+                            {% endif %}                                 
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>

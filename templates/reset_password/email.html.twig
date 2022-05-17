@@ -1,0 +1,9 @@
+<h1>Bonjour nous sommes NeliExprass !</h1>
+
+<p>Pour créer un nouveau mot de passe, merci de cliquer sur ce lien qui vous portera sur la page de connexion à notre site.</p>
+
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+
+<p>Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p>A bientôt !</p>
